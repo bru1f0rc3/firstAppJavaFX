@@ -21,16 +21,7 @@ public class WelcomeController implements Initializable {
 
     private String showRoleName(){
         Manager.currentRole.setRoleId(Manager.currentUser.getRoleId());
-        if (Manager.currentRole.getRoleId() == 1) {
-            return RoleName.PARTICIPANT.toString();
-        }
-        if (Manager.currentRole.getRoleId() == 2) {
-            return RoleName.MANAGER.toString();
-        }
-        if (Manager.currentRole.getRoleId() == 3) {
-            return RoleName.ADMIN.toString();
-        }
-        return "Неизвестная роль";
+        return Manager.currentRole.getTitle();
     }
 
     private String greetUser(){

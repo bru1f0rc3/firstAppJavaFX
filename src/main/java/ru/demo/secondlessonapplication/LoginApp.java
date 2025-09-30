@@ -10,12 +10,8 @@ import ru.demo.secondlessonapplication.util.Manager;
 import java.io.IOException;
 
 public class LoginApp extends Application {
-    public User currentUser;
-
     public static void main(String[] args) {
         launch();
-
-
     }
 
     @Override
