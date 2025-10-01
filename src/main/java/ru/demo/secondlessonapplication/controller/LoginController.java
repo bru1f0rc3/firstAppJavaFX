@@ -60,16 +60,12 @@ public class LoginController implements Initializable{
 
     private String showStage(){
         Manager.currentRole.setRoleId(Manager.currentUser.getRoleId());
-        if (Manager.currentRole.getRoleId() == 1) {
-            return "user-view.fxml";
-        }
-        if (Manager.currentRole.getRoleId() == 2) {
-            return "manager-view.fxml";
-        }
-        if (Manager.currentRole.getRoleId() == 3) {
-            return "admin-view.fxml";
-        }
-        return "user-view.fxml"; // значение по умолчанию
+        return switch (Manager.currentRole.getRoleId().intValue()) {
+            case 1 -> "user-view.fxml";
+            case 2 -> "manager-view.fxml";
+            case 3 -> "admin-view.fxml";
+            default -> "user-view.fxml"; // по умолчанию
+        };
     }
 
     public void showMainWindow(User person) {

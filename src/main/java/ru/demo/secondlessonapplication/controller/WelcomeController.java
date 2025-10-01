@@ -11,8 +11,6 @@ import javafx.scene.control.Alert.AlertType;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import ru.demo.secondlessonapplication.model.RoleName;
-
 public class WelcomeController implements Initializable {
     @FXML
     private Label RoleNameWelcome;
@@ -25,18 +23,13 @@ public class WelcomeController implements Initializable {
     }
 
     private String greetUser(){
-        String sayHello = "";
-        Manager.currentRole.setRoleId(Manager.currentRole.getRoleId());
-        if (Manager.currentRole.getRoleId() == 1) {
-            sayHello = "Добрый вечер, " + Manager.currentUser.getFirstName() + "!";
-        }
-        if (Manager.currentRole.getRoleId() == 2) {
-            sayHello = "Добрый день, " + Manager.currentUser.getFirstName() + "!";
-        }
-        if (Manager.currentRole.getRoleId() == 3) {
-            sayHello = "Доброе утро, " + Manager.currentUser.getFirstName() + "!";
-        }
-        return sayHello;
+        String greeting = switch (Manager.currentRole.getRoleId().intValue()) {
+            case 1 -> "Добрый вечер";
+            case 2 -> "Добрый день";
+            case 3 -> "Доброе утро";
+            default -> "Здравствуйте";
+        };
+        return greeting + ", " + Manager.currentUser.getFirstName() + "!";
     }
 
     @Override

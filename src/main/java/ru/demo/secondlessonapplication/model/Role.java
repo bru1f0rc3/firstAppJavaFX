@@ -1,9 +1,8 @@
 package ru.demo.secondlessonapplication.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import org.hibernate.Session;
+import ru.demo.secondlessonapplication.util.HibernateSessionFactoryUtil;
 
 @Entity
 @Table(name = "roles", schema = "public")
@@ -19,17 +18,28 @@ public class Role {
         return roleId;
     }
 
+    private String loadTitleRoleName(){
+        String title = "";
+        try(Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession()){
+            Query query = session.createQuery("from Role where roleId = :roleId");
+            query.setParameter("roleId", getRoleId());
+            Role role = (Role) query.getSingleResult();
+            title = role.getTitle();
+        }
+        catch (Exception e){
+            System.out.println("Исключение " + e);
+        }
+        return title;
+    }
+
     public void setRoleId(Long roleId) {
         this.roleId = roleId;
     }
 
     public String getTitle() {
-        if (getRoleId() == 1)
-            this.title = RoleName.PARTICIPANT.toString();
-        if (getRoleId() == 2)
-            this.title = RoleName.MANAGER.toString();
-        if (getRoleId() == 3)
-            this.title = RoleName.ADMIN.toString();
+        if (this.title == null) {
+            this.title = loadTitleRoleName();
+        }
         return this.title;
     }
 
